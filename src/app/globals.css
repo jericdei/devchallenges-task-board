@@ -5,3 +5,31 @@
 body {
   @apply bg-neutral-100 text-neutral-900;
 }
+
+.title {
+  @apply text-[2.5rem];
+}
+
+.description {
+  @apply text-base;
+}
+
+.description-light {
+  @apply font-light;
+}
+
+.task-title {
+  @apply font-semibold text-[1.25rem];
+}
+
+.task-button {
+  @apply font-semibold;
+}
+
+.button-text {
+  @apply font-medium text-sm;
+}
+
+.input-label {
+  @apply font-medium text-xs;
+}
