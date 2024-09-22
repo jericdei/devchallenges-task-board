@@ -7,10 +7,28 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+    colors: {
+      neutral: {
+        100: "#F8FAFC",
+        200: "#E3E8EF",
+        300: "#00000033",
+        400: "#97A3B6",
+      },
+      info: {
+        700: "#3662E3",
+      },
+      success: {
+        200: "#A0ECB1",
+        700: "#32D657",
+      },
+      warning: {
+        200: "#F5E8D5",
+        300: "#F5D565",
+        700: "#E9A23B",
+      },
+      danger: {
+        200: "#F7D4D3",
+        700: "#DD524C",
       },
     },
   },
