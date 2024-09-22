@@ -5,4 +5,10 @@ import { Database } from "bun:sqlite";
 const sqlite = new Database("db.sqlite");
 const db = drizzle(sqlite);
 
-migrate(db, { migrationsFolder: "./src/db/migrations" });
+try {
+  migrate(db, { migrationsFolder: "./src/db/migrations" });
+
+  console.log("Migration successful.");
+} catch (e) {
+  console.error(e);
+}

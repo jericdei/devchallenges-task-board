@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push"
+    "db:migrate": "bun ./src/db/migrate.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.33.0",
