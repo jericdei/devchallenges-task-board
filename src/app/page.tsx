@@ -1,9 +1,11 @@
+import Board from "@/components/board/board";
 import { defaultBoard } from "@/constants/defaults";
 import { db } from "@/db";
-import { boards, tasks } from "@/db/schema";
-import { redirect } from "next/navigation";
+import { Board as TBoard, boards, tasks } from "@/db/schema";
 
 export default async function Page() {
+  let board: TBoard;
+
   const [insertedBoard] = await db
     .insert(boards)
     .values({
@@ -12,7 +14,9 @@ export default async function Page() {
     })
     .returning();
 
-  await db
+  board = insertedBoard;
+
+  const insertedTasks = await db
     .insert(tasks)
     .values(
       defaultBoard.tasks?.map((task) => ({
@@ -25,5 +29,7 @@ export default async function Page() {
     )
     .returning();
 
-  redirect(`/board/${insertedBoard.id}`);
+  board.tasks = insertedTasks;
+
+  return <Board board={insertedBoard} />;
 }

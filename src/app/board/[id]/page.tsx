@@ -1,3 +1,4 @@
+import Board from "@/components/board/board";
 import BoardCard from "@/components/board/board-card";
 import TaskList from "@/components/task/task-list";
 import { db } from "@/db";
@@ -19,16 +20,5 @@ export default async function Home({ params }: { params: { id: string } }) {
     notFound();
   }
 
-  return (
-    <main className="flex min-h-screen w-full items-center justify-center px-2 py-8">
-      <div>
-        <BoardCard board={board} />
-
-        <TaskList
-          boardId={board.id}
-          tasks={board.tasks}
-        />
-      </div>
-    </main>
-  );
+  return <Board board={board} />;
 }
