@@ -9,12 +9,11 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Button from "../button";
 import CheckIcon from "../vector/check-icon";
 import TrashIcon from "../vector/trash-icon";
-import { createTask, deleteTask, updateTask } from "@/lib/actions";
+import { deleteTask, updateTask } from "@/lib/actions";
 
 interface TaskFormModalProps {
   boardId: string;
   task?: Task;
-  isEdit: boolean;
   onClose?: () => void;
 }
 
@@ -33,7 +32,7 @@ const defaultValues: TaskFormInputs = {
 };
 
 const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
-  ({ boardId, task, isEdit, onClose }, ref) => {
+  ({ task, onClose }, ref) => {
     const { register, handleSubmit, control, reset } = useForm<TaskFormInputs>({
       defaultValues,
       mode: "onChange",
@@ -41,7 +40,7 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
     });
 
     useEffect(() => {
-      if (isEdit) {
+      if (task?.id) {
         reset({
           name: task?.name ?? "",
           description: task?.description ?? "",
@@ -51,20 +50,23 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
       } else {
         reset(defaultValues);
       }
-    }, [isEdit, task, reset]);
+    }, [task, reset]);
 
     const onSubmit: SubmitHandler<TaskFormInputs> = async (data) => {
-      if (task?.id) {
-        await updateTask(task?.id, data);
-      } else {
-        await createTask(boardId, data);
+      if (!task?.id) {
+        return;
       }
 
+      await updateTask(task?.id, data);
       onClose?.();
     };
 
     const removeTask = async () => {
-      await deleteTask(task?.id ?? "");
+      if (!task?.id) {
+        return;
+      }
+
+      await deleteTask(task.id);
       onClose?.();
     };
 
@@ -133,16 +135,14 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
           </div>
 
           <div className="flex justify-end gap-4">
-            {task?.id && (
-              <Button
-                type="button"
-                variant="secondary"
-                icon={<TrashIcon />}
-                onClick={removeTask}
-              >
-                Delete
-              </Button>
-            )}
+            <Button
+              type="button"
+              variant="secondary"
+              icon={<TrashIcon />}
+              onClick={removeTask}
+            >
+              Delete
+            </Button>
 
             <Button
               type="submit"

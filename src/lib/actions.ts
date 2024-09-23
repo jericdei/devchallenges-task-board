@@ -18,10 +18,10 @@ export async function updateTask(id: string, task: TaskFormInputs) {
   redirect(`/?boardId=${updatedTask.boardId}`);
 }
 
-export async function createTask(boardId: string, task: TaskFormInputs) {
+export async function createDefaultTask(boardId: string) {
   const [insertedTask] = await db
     .insert(tasks)
-    .values({ boardId, ...task })
+    .values({ boardId, name: "New Task", status: "TODO", icon: "📚" })
     .returning();
 
   redirect(`/?boardId=${insertedTask.boardId}`);

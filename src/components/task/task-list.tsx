@@ -5,6 +5,7 @@ import TaskItem from "./task-item";
 import TaskNewButton from "./task-new-button";
 import { useRef, useState } from "react";
 import TaskFormModal from "./task-form-modal";
+import { createDefaultTask } from "@/lib/actions";
 
 interface TaskListProps {
   boardId: string;
@@ -22,30 +23,28 @@ export default function TaskList({ boardId, tasks }: TaskListProps) {
         ref={modalRef}
         boardId={boardId}
         task={selectedTask}
-        isEdit={!!selectedTask}
         onClose={() => {
           modalRef.current?.close();
         }}
       />
 
       <div className="flex flex-col gap-4">
-        {tasks?.map((task) => (
-          <TaskItem
-            key={task.id}
-            task={task}
-            onEdit={() => {
-              setSelectedTask(task);
-              modalRef.current?.showModal();
-            }}
-          />
-        ))}
+        {tasks?.length ? (
+          tasks.map((task) => (
+            <TaskItem
+              key={task.id}
+              task={task}
+              onEdit={() => {
+                setSelectedTask(task);
+                modalRef.current?.showModal();
+              }}
+            />
+          ))
+        ) : (
+          <p className="p-16 text-center">No tasks.</p>
+        )}
 
-        <TaskNewButton
-          onClick={() => {
-            setSelectedTask(undefined);
-            modalRef.current?.showModal();
-          }}
-        />
+        <TaskNewButton onClick={() => createDefaultTask(boardId)} />
       </div>
     </>
   );
