@@ -6,6 +6,11 @@ body {
   @apply bg-neutral-100 text-neutral-900;
 }
 
+textarea {
+  field-sizing: content;
+  min-block-size: 6lh;
+}
+
 .title {
   @apply text-[2.5rem];
 }
@@ -31,7 +36,7 @@ body {
 }
 
 .input-label {
-  @apply font-medium text-xs;
+  @apply font-medium text-xs text-neutral-400;
 }
 
 .modal-animation {

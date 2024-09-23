@@ -11,6 +11,13 @@ export const TaskStatuses = [
   "WONT_DO",
 ] as const;
 
+export const TaskStatusesLabel = {
+  TODO: "Todo",
+  IN_PROGRESS: "In Progress",
+  COMPLETED: "Completed",
+  WONT_DO: "Won't Do",
+};
+
 export const TaskStatusEnum = createEnumObject(TaskStatuses);
 export type TaskStatus = keyof typeof TaskStatusEnum;
 export const taskStatuses = schema.enum("task_statuses", TaskStatuses);

@@ -2,7 +2,7 @@
 
 import { Task } from "@/db/schema";
 import TaskItem from "./task-item";
-import NewTaskButton from "./new-task-button";
+import TaskNewButton from "./task-new-button";
 import { useRef, useState } from "react";
 import TaskFormModal from "./task-form-modal";
 
@@ -11,20 +11,15 @@ interface TaskListProps {
 }
 
 export default function TaskList({ tasks }: TaskListProps) {
-  const [isEdit, setIsEdit] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | undefined>();
 
   const modalRef = useRef<HTMLDialogElement>(null);
-
-  const openModal = (edit: boolean) => {
-    setIsEdit(edit);
-    modalRef.current?.showModal();
-  };
 
   return (
     <>
       <TaskFormModal
-        isEdit={isEdit}
         ref={modalRef}
+        task={selectedTask}
         onClose={() => modalRef.current?.close()}
       />
 
@@ -34,14 +29,16 @@ export default function TaskList({ tasks }: TaskListProps) {
             key={task.id}
             task={task}
             onEdit={() => {
-              openModal(true);
+              setSelectedTask(task);
+              modalRef.current?.showModal();
             }}
           />
         ))}
 
-        <NewTaskButton
+        <TaskNewButton
           onClick={() => {
-            openModal(false);
+            setSelectedTask(undefined);
+            modalRef.current?.showModal();
           }}
         />
       </div>

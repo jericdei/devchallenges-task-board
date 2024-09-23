@@ -2,6 +2,8 @@ import { Board, Task } from "@/db/schema";
 
 const defaultBoardId = "default-board";
 
+export const icons = ["👨‍💻", "💬", "☕", "🏋️", "📚", "⏰"];
+
 export const defaultTasks: Task[] = [
   {
     id: "task-1",

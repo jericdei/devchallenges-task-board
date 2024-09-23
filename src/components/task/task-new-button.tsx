@@ -2,7 +2,7 @@
 
 import AddIcon from "../vector/add-icon";
 
-export default function NewTaskButton(
+export default function TaskNewButton(
   props: React.ButtonHTMLAttributes<HTMLButtonElement>
 ) {
   return (
