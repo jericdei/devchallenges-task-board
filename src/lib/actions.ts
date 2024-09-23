@@ -3,7 +3,7 @@
 import { TaskFormInputs } from "@/components/task/task-form-modal";
 import { icons } from "@/constants/defaults";
 import { db } from "@/db";
-import { tasks } from "@/db/schema";
+import { boards, tasks } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
@@ -40,4 +40,19 @@ export async function deleteTask(id: string) {
     .returning();
 
   redirect(`/board/${deletedTask.boardId}`);
+}
+
+export async function updateBoard(
+  id: string,
+  board: { name: string; description: string }
+) {
+  const [updatedBoard] = await db
+    .update(boards)
+    .set({
+      ...board,
+    })
+    .where(eq(boards.id, id))
+    .returning();
+
+  redirect(`/board/${updatedBoard.id}`);
 }
