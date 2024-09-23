@@ -6,6 +6,9 @@ import { Task, TaskStatus } from "@/db/schema";
 import TaskIconSelector from "./task-icon-selector";
 import TaskStatusSelector from "./task-status-selector";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import Button from "../button";
+import CheckIcon from "../vector/check-icon";
+import TrashIcon from "../vector/trash-icon";
 
 interface TaskFormModalProps {
   task?: Task;
@@ -50,7 +53,10 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
 
     return (
       <Modal title="Task details" dialogRef={ref} onClose={onClose}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col justify-between h-full"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="flex flex-col gap-4">
             <label htmlFor="name" className="flex flex-col gap-2">
               <span className="input-label">Task Name</span>
@@ -100,7 +106,13 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
           </div>
 
           <div className="flex justify-end gap-4">
-            <button type="submit">Save</button>
+            <Button variant="secondary" icon={<TrashIcon />}>
+              Delete
+            </Button>
+
+            <Button type="submit" variant="primary" icon={<CheckIcon />}>
+              Save
+            </Button>
           </div>
         </form>
       </Modal>

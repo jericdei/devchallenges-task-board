@@ -35,7 +35,7 @@ export default function Modal({
       onClick={handleDialogClick}
       {...props}
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 h-full">
         <div className="flex justify-between items-center">
           <h2 className="task-title">{title}</h2>
 
