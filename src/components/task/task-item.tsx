@@ -5,7 +5,12 @@ import TimeIcon from "../vector/time-icon";
 import DoneIcon from "../vector/done-icon";
 import WontDoIcon from "../vector/wont-do-icon";
 
-export default function TaskItem({ task }: { task: Task }) {
+interface TaskItemProps {
+  task: Task;
+  onEdit?: () => void;
+}
+
+export default function TaskItem({ task, onEdit }: TaskItemProps) {
   let status: {
     bg: string;
     icon: React.ReactElement | null;
@@ -42,14 +47,10 @@ export default function TaskItem({ task }: { task: Task }) {
       break;
   }
 
-  const showEditModal = () => {
-    console.log("show edit modal");
-  };
-
   return (
     <button
       className={`p-4 rounded-xl text-left ${status.bg}`}
-      onClick={showEditModal}
+      onClick={onEdit}
     >
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4 flex-1">

@@ -1,5 +1,7 @@
+import Modal from "@/components/modal";
 import NewTaskButton from "@/components/task/new-task-button";
 import TaskItem from "@/components/task/task-item";
+import TaskList from "@/components/task/task-list";
 import Logo from "@/components/vector/logo";
 import PencilIcon from "@/components/vector/pencil-icon";
 import { defaultBoard } from "@/constants/defaults";
@@ -44,13 +46,7 @@ export default async function Home({
           <p className="description col-start-2">{board.description}</p>
         </div>
 
-        <div className="flex flex-col gap-4">
-          {board.tasks?.map((task) => (
-            <TaskItem key={task.id} task={task} />
-          ))}
-
-          <NewTaskButton />
-        </div>
+        <TaskList tasks={board.tasks} />
       </div>
     </main>
   );

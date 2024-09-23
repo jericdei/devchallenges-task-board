@@ -33,3 +33,29 @@ body {
 .input-label {
   @apply font-medium text-xs;
 }
+
+.modal-animation {
+  transition: display 0.3s allow-discrete, overlay 0.3s allow-discrete;
+  animation: modal-close 0.3s forwards;
+  &[open] {
+    animation: modal-open 0.3s forwards;
+  }
+}
+
+@keyframes modal-open {
+  from {
+    transform: translateX(150%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes modal-close {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(150%);
+  }
+}
