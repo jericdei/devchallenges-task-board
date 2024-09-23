@@ -1,6 +1,7 @@
 "use server";
 
 import { TaskFormInputs } from "@/components/task/task-form-modal";
+import { icons } from "@/constants/defaults";
 import { db } from "@/db";
 import { tasks } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -15,16 +16,21 @@ export async function updateTask(id: string, task: TaskFormInputs) {
     .where(eq(tasks.id, id))
     .returning();
 
-  redirect(`/?boardId=${updatedTask.boardId}`);
+  redirect(`/board/${updatedTask.boardId}`);
 }
 
 export async function createDefaultTask(boardId: string) {
   const [insertedTask] = await db
     .insert(tasks)
-    .values({ boardId, name: "New Task", status: "TODO", icon: "📚" })
+    .values({
+      boardId,
+      name: "New Task",
+      status: "TODO",
+      icon: icons.sort(() => 0.5 - Math.random())[0],
+    })
     .returning();
 
-  redirect(`/?boardId=${insertedTask.boardId}`);
+  redirect(`/board/${insertedTask.boardId}`);
 }
 
 export async function deleteTask(id: string) {
@@ -33,5 +39,5 @@ export async function deleteTask(id: string) {
     .where(eq(tasks.id, id))
     .returning();
 
-  redirect(`/?boardId=${deletedTask.boardId}`);
+  redirect(`/board/${deletedTask.boardId}`);
 }
