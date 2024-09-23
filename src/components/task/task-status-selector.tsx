@@ -43,13 +43,16 @@ const TaskStatusSelector = forwardRef<
               }}
             />
 
-            <label htmlFor={status} className="space-y-2">
+            <label
+              htmlFor={status}
+              className="space-y-2"
+            >
               <div
-                className={`flex items-center justify-between cursor-pointer text-2xl p-1 rounded-xl border-2 ${
+                className={`flex cursor-pointer items-center justify-between rounded-xl border-2 p-1 text-2xl ${
                   status === selected ? "border-info-700" : "border-neutral-200"
                 }`}
               >
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                   <TaskStatusIcon status={status} />
                   <p className="text-base">{TaskStatusesLabel[status]}</p>
                 </div>

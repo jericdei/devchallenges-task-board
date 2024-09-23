@@ -52,29 +52,39 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
     };
 
     return (
-      <Modal title="Task details" dialogRef={ref} onClose={onClose}>
+      <Modal
+        title="Task details"
+        dialogRef={ref}
+        onClose={onClose}
+      >
         <form
-          className="flex flex-col justify-between h-full"
+          className="flex h-full flex-col justify-between"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col gap-4">
-            <label htmlFor="name" className="flex flex-col gap-2">
+            <label
+              htmlFor="name"
+              className="flex flex-col gap-2"
+            >
               <span className="input-label">Task Name</span>
               <input
                 type="text"
                 id="name"
-                className="px-4 py-2 rounded-xl border-2 border-neutral-400"
+                className="rounded-xl border-2 border-neutral-400 px-4 py-2"
                 placeholder="Enter a task name"
                 {...register("name")}
               />
             </label>
 
-            <label htmlFor="description" className="flex flex-col gap-2">
+            <label
+              htmlFor="description"
+              className="flex flex-col gap-2"
+            >
               <span className="input-label">Description</span>
               <textarea
                 id="description"
                 rows={6}
-                className="px-4 py-2 rounded-xl border-2 border-neutral-400"
+                className="rounded-xl border-2 border-neutral-400 px-4 py-2"
                 placeholder="Enter a short description"
                 {...register("description")}
               />
@@ -106,11 +116,19 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
           </div>
 
           <div className="flex justify-end gap-4">
-            <Button variant="secondary" icon={<TrashIcon />}>
+            <Button
+              type="button"
+              variant="secondary"
+              icon={<TrashIcon />}
+            >
               Delete
             </Button>
 
-            <Button type="submit" variant="primary" icon={<CheckIcon />}>
+            <Button
+              type="submit"
+              variant="primary"
+              icon={<CheckIcon />}
+            >
               Save
             </Button>
           </div>

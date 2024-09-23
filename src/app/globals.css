@@ -24,7 +24,7 @@ textarea {
 }
 
 .task-title {
-  @apply font-semibold text-[1.25rem];
+  @apply text-[1.25rem] font-semibold;
 }
 
 .task-button {
@@ -32,15 +32,17 @@ textarea {
 }
 
 .button-text {
-  @apply font-medium text-sm;
+  @apply text-sm font-medium;
 }
 
 .input-label {
-  @apply font-medium text-xs text-neutral-400;
+  @apply text-xs font-medium text-neutral-400;
 }
 
 .modal-animation {
-  transition: display 0.3s allow-discrete, overlay 0.3s allow-discrete;
+  transition:
+    display 0.3s allow-discrete,
+    overlay 0.3s allow-discrete;
   animation: modal-close 0.3s forwards;
   &[open] {
     animation: modal-open 0.3s forwards;

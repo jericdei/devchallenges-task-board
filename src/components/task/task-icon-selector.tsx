@@ -39,9 +39,12 @@ const TaskIconSelector = forwardRef<HTMLInputElement, TaskIconSelectorProps>(
                 }}
               />
 
-              <label htmlFor={icon} className="space-y-2">
+              <label
+                htmlFor={icon}
+                className="space-y-2"
+              >
                 <div
-                  className={`cursor-pointer text-2xl px-4 py-3 rounded-xl ${
+                  className={`cursor-pointer rounded-xl px-4 py-3 text-2xl ${
                     icon === selected ? "bg-warning-300" : "bg-neutral-200"
                   }`}
                 >

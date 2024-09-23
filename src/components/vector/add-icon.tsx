@@ -7,7 +7,13 @@ export default function AddIcon() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="12" cy="12" r="9" fill="#F8FAFC" fillOpacity="0.25" />
+      <circle
+        cx="12"
+        cy="12"
+        r="9"
+        fill="#F8FAFC"
+        fillOpacity="0.25"
+      />
       <path
         d="M12 8L12 16"
         stroke="#F8FAFC"

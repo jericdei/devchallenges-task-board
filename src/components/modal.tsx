@@ -31,16 +31,16 @@ export default function Modal({
   return (
     <dialog
       ref={dialogRef}
-      className="rounded-xl p-8 w-1/2 h-full mr-4 modal-animation"
+      className="modal-animation mr-4 h-full w-1/2 rounded-xl p-8"
       onClick={handleDialogClick}
       {...props}
     >
-      <div className="flex flex-col gap-4 h-full">
-        <div className="flex justify-between items-center">
+      <div className="flex h-full flex-col gap-4">
+        <div className="flex items-center justify-between">
           <h2 className="task-title">{title}</h2>
 
           <button
-            className="p-2 rounded-lg border border-neutral-200"
+            className="rounded-lg border border-neutral-200 p-2"
             onClick={onClose}
           >
             <CloseIcon />

@@ -39,7 +39,7 @@ export default function TaskStatusIcon({ status }: { status: TaskStatus }) {
   }
 
   return (
-    <div className={`p-3 rounded-xl ${statusStyles.iconBg}`}>
+    <div className={`rounded-xl p-3 ${statusStyles.iconBg}`}>
       {statusStyles.icon}
     </div>
   );

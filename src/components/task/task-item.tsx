@@ -49,22 +49,22 @@ export default function TaskItem({ task, onEdit }: TaskItemProps) {
 
   return (
     <button
-      className={`p-4 rounded-xl text-left ${status.bg}`}
+      className={`rounded-xl p-4 text-left ${status.bg}`}
       onClick={onEdit}
     >
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4 flex-1">
-          <div className="bg-neutral-100 px-3 py-2 rounded-xl self-start">
+      <div className="flex items-center justify-between">
+        <div className="flex flex-1 items-center gap-4">
+          <div className="self-start rounded-xl bg-neutral-100 px-3 py-2">
             <p className="text-xl">{task.icon}</p>
           </div>
 
           <div>
             <p className="task-title">{task.name}</p>
-            <p className="max-w-72 mt-2">{task.description}</p>
+            <p className="mt-2 max-w-72">{task.description}</p>
           </div>
         </div>
 
-        <div className={`p-3 rounded-xl ${status.iconBg}`}>{status.icon}</div>
+        <div className={`rounded-xl p-3 ${status.iconBg}`}>{status.icon}</div>
       </div>
     </button>
   );
