@@ -1,14 +1,19 @@
-import { migrate } from "drizzle-orm/bun-sqlite/migrator";
-import { drizzle } from "drizzle-orm/bun-sqlite";
-import { Database } from "bun:sqlite";
+import postgres from "postgres";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import { drizzle } from "drizzle-orm/postgres-js";
+const dbUrl = process.env.DB_URL;
 
-const sqlite = new Database("db.sqlite");
-const db = drizzle(sqlite);
-
-try {
-  migrate(db, { migrationsFolder: "./src/db/migrations" });
-
-  console.log("Migration successful.");
-} catch (e) {
-  console.error(e);
+if (!dbUrl) {
+  throw new Error("DB_URL is not set");
 }
+
+const migrationsClient = postgres(dbUrl, {
+  max: 1,
+});
+
+const db = drizzle(migrationsClient);
+
+await migrate(db, { migrationsFolder: "./src/db/migrations" });
+await migrationsClient.end();
+
+console.log("Migrations completed.");

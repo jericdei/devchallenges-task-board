@@ -1,40 +1,37 @@
 {
-  "version": "6",
-  "dialect": "sqlite",
-  "id": "671abaaa-df76-4937-a1c1-ee5cbc616fa8",
+  "id": "b72a01df-1448-49a4-8241-b652b4568a4d",
   "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "boards": {
+    "task_board.boards": {
       "name": "boards",
+      "schema": "task_board",
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         },
         "name": {
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         },
         "description": {
           "name": "description",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "integer",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "(CURRENT_TIMESTAMP)"
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -42,58 +39,53 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "tasks": {
+    "task_board.tasks": {
       "name": "tasks",
+      "schema": "task_board",
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         },
         "board_id": {
           "name": "board_id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": false
         },
         "name": {
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         },
         "description": {
           "name": "description",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
+          "notNull": false
         },
         "icon": {
           "name": "icon",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
+          "notNull": false
         },
         "status": {
           "name": "status",
-          "type": "text",
+          "type": "task_statuses",
+          "typeSchema": "task_board",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
-          "type": "integer",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "(CURRENT_TIMESTAMP)"
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -102,6 +94,7 @@
           "name": "tasks_board_id_boards_id_fk",
           "tableFrom": "tasks",
           "tableTo": "boards",
+          "schemaTo": "task_board",
           "columnsFrom": [
             "board_id"
           ],
@@ -116,13 +109,25 @@
       "uniqueConstraints": {}
     }
   },
-  "enums": {},
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
+  "enums": {
+    "task_board.task_statuses": {
+      "name": "task_statuses",
+      "schema": "task_board",
+      "values": [
+        "TODO",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "WONT_DO"
+      ]
+    }
   },
-  "internal": {
-    "indexes": {}
+  "schemas": {
+    "task_board": "task_board"
+  },
+  "sequences": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
   }
 }
