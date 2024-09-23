@@ -6,16 +6,16 @@ import Logo from "@/components/vector/logo";
 import PencilIcon from "@/components/vector/pencil-icon";
 import { defaultBoard } from "@/constants/defaults";
 import { db } from "@/db";
-import { boards } from "@/db/schema";
+import { boards, tasks } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: { boardId: string };
 }) {
-  let board = defaultBoard;
+  let board;
 
   if (searchParams.boardId) {
     const boardQuery = await db.query.boards.findFirst({
@@ -30,6 +30,29 @@ export default async function Home({
     }
 
     board = boardQuery;
+  } else {
+    const [insertedBoard] = await db
+      .insert(boards)
+      .values({
+        name: defaultBoard.name,
+        description: defaultBoard.description,
+      })
+      .returning();
+
+    await db
+      .insert(tasks)
+      .values(
+        defaultBoard.tasks?.map((task) => ({
+          boardId: insertedBoard.id,
+          name: task.name,
+          description: task.description,
+          icon: task.icon ?? "",
+          status: task.status,
+        })) ?? []
+      )
+      .returning();
+
+    redirect(`/?boardId=${insertedBoard.id}`);
   }
 
   return (

@@ -23,18 +23,14 @@ export type TaskStatus = keyof typeof TaskStatusEnum;
 export const taskStatuses = schema.enum("task_statuses", TaskStatuses);
 
 export const boards = schema.table("boards", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
   description: text("description"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const boardsRelations = relations(boards, ({ many }) => ({
-  tasks: many(tasks),
-}));
-
 export const tasks = schema.table("tasks", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   boardId: uuid("board_id").references(() => boards.id),
   name: text("name").notNull(),
   description: text("description"),
@@ -43,8 +39,15 @@ export const tasks = schema.table("tasks", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const boardsRelations = relations(boards, ({ many }) => ({
+  tasks: many(tasks),
+}));
+
 export const tasksRelations = relations(tasks, ({ one }) => ({
-  board: one(boards),
+  board: one(boards, {
+    fields: [tasks.boardId],
+    references: [boards.id],
+  }),
 }));
 
 export type Task = InferSelectModel<typeof tasks> & {
