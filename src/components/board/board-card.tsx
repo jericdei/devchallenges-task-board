@@ -30,7 +30,7 @@ export default function BoardCard({ board }: { board: Board }) {
         <div>
           <input
             type="text"
-            className={`bg-transparent title w-full px-4 text-neutral-900 placeholder-neutral-400 outline-none ${editing ? "border-b border-neutral-400" : ""}`}
+            className={`title w-full bg-transparent px-4 text-neutral-900 placeholder-neutral-400 outline-none ${editing ? "border-b border-neutral-400" : ""}`}
             value={boardData.name}
             onChange={(e) =>
               setBoardData({ ...boardData, name: e.target.value })
@@ -53,7 +53,7 @@ export default function BoardCard({ board }: { board: Board }) {
 
       <input
         type="text"
-        className={`bg-transparent description col-start-2 px-4 text-neutral-900 placeholder-neutral-400 outline-none ${editing ? "border-b border-neutral-400" : ""}`}
+        className={`description col-start-2 bg-transparent px-4 text-neutral-900 placeholder-neutral-400 outline-none ${editing ? "border-b border-neutral-400" : ""}`}
         value={boardData.description ?? ""}
         onChange={(e) =>
           setBoardData({ ...boardData, description: e.target.value })

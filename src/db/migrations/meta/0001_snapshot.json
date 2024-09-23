@@ -97,12 +97,8 @@
           "tableFrom": "tasks",
           "tableTo": "boards",
           "schemaTo": "task_board",
-          "columnsFrom": [
-            "board_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["board_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -115,12 +111,7 @@
     "task_board.task_statuses": {
       "name": "task_statuses",
       "schema": "task_board",
-      "values": [
-        "TODO",
-        "IN_PROGRESS",
-        "COMPLETED",
-        "WONT_DO"
-      ]
+      "values": ["TODO", "IN_PROGRESS", "COMPLETED", "WONT_DO"]
     }
   },
   "schemas": {

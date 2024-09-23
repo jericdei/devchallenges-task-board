@@ -4,8 +4,6 @@ import { db } from "@/db";
 import { Board as TBoard, boards, tasks } from "@/db/schema";
 
 export default async function Page() {
-  let board: TBoard;
-
   const [insertedBoard] = await db
     .insert(boards)
     .values({
@@ -14,13 +12,13 @@ export default async function Page() {
     })
     .returning();
 
-  board = insertedBoard;
+  const board: TBoard = insertedBoard;
 
   const insertedTasks = await db
     .insert(tasks)
     .values(
       defaultBoard.tasks?.map((task) => ({
-        boardId: insertedBoard.id,
+        boardId: board.id,
         name: task.name,
         description: task.description,
         icon: task.icon ?? "",

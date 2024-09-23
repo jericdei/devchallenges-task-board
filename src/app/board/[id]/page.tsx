@@ -1,6 +1,4 @@
 import Board from "@/components/board/board";
-import BoardCard from "@/components/board/board-card";
-import TaskList from "@/components/task/task-list";
 import { db } from "@/db";
 import { boards } from "@/db/schema";
 import { eq } from "drizzle-orm";
