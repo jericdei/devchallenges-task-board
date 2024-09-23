@@ -15,7 +15,8 @@
     "next": "14.2.13",
     "postgres": "^3.4.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.53.0"
   },
   "devDependencies": {
     "@types/bun": "^1.1.10",

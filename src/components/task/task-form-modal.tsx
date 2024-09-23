@@ -1,27 +1,56 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 import Modal from "../modal";
-import { Task } from "@/db/schema";
+import { Task, TaskStatus } from "@/db/schema";
 import TaskIconSelector from "./task-icon-selector";
 import TaskStatusSelector from "./task-status-selector";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 interface TaskFormModalProps {
   task?: Task;
   onClose?: () => void;
 }
 
+type TaskFormInputs = {
+  name: string;
+  description: string;
+  icon: string | null;
+  status: TaskStatus | null;
+};
+
 const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
   ({ task, onClose }, ref) => {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
+    const { register, handleSubmit, control, reset } = useForm<TaskFormInputs>({
+      defaultValues: {
+        name: "",
+        description: "",
+        icon: null,
+        status: null,
+      },
+      mode: "onChange",
+    });
 
-      console.log("nice");
+    useEffect(() => {
+      if (!task) {
+        return;
+      }
+
+      reset({
+        name: task.name,
+        description: task.description ?? "",
+        icon: task.icon,
+        status: task.status,
+      });
+    }, [task, reset]);
+
+    const onSubmit: SubmitHandler<TaskFormInputs> = (data) => {
+      console.log(data);
     };
 
     return (
       <Modal title="Task details" dialogRef={ref} onClose={onClose}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-4">
             <label htmlFor="name" className="flex flex-col gap-2">
               <span className="input-label">Task Name</span>
@@ -30,7 +59,7 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
                 id="name"
                 className="px-4 py-2 rounded-xl border-2 border-neutral-400"
                 placeholder="Enter a task name"
-                defaultValue={task?.name}
+                {...register("name")}
               />
             </label>
 
@@ -41,16 +70,37 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
                 rows={6}
                 className="px-4 py-2 rounded-xl border-2 border-neutral-400"
                 placeholder="Enter a short description"
-                defaultValue={task?.description || ""}
+                {...register("description")}
               />
             </label>
 
-            <TaskIconSelector id="icon" />
-            <TaskStatusSelector id="status" />
+            <Controller
+              control={control}
+              name="icon"
+              render={({ field: { onChange, ref, value } }) => (
+                <TaskIconSelector
+                  ref={ref}
+                  defaultSelected={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="status"
+              render={({ field: { onChange, ref, value } }) => (
+                <TaskStatusSelector
+                  ref={ref}
+                  defaultSelected={value}
+                  onChange={onChange}
+                />
+              )}
+            />
           </div>
 
           <div className="flex justify-end gap-4">
-            <input type="submit" value="Save" />
+            <button type="submit">Save</button>
           </div>
         </form>
       </Modal>

@@ -1,14 +1,26 @@
 "use client";
 
 import { TaskStatuses, TaskStatusesLabel } from "@/db/schema";
-import React, { useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import CheckIcon from "../vector/check-icon";
 import TaskStatusIcon from "./task-status-icon";
 
-export default function TaskStatusSelector(
-  props: React.InputHTMLAttributes<HTMLInputElement>
-) {
+interface TaskStatusSelectorProps
+  extends React.PropsWithoutRef<JSX.IntrinsicElements["input"]> {
+  defaultSelected?: string | null;
+}
+
+const TaskStatusSelector = forwardRef<
+  HTMLInputElement,
+  TaskStatusSelectorProps
+>(({ defaultSelected, ...props }, ref) => {
   const [selected, setSelected] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (defaultSelected && typeof defaultSelected === "string") {
+      setSelected(defaultSelected);
+    }
+  }, [defaultSelected]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -19,11 +31,16 @@ export default function TaskStatusSelector(
           <React.Fragment key={status}>
             <input
               type="radio"
-              name={props.id}
               id={status}
+              name="status"
               value={status}
-              onChange={() => setSelected(status)}
+              ref={ref}
+              {...props}
               hidden
+              onChange={(e) => {
+                setSelected(e.target.value);
+                props.onChange?.(e);
+              }}
             />
 
             <label htmlFor={status} className="space-y-2">
@@ -49,4 +66,8 @@ export default function TaskStatusSelector(
       </div>
     </div>
   );
-}
+});
+
+TaskStatusSelector.displayName = "TaskStatusSelector";
+
+export default TaskStatusSelector;
