@@ -77,7 +77,7 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
         onClose={onClose}
       >
         <form
-          className="flex h-full flex-col justify-between"
+          className="flex h-full flex-col items-center justify-between gap-4 lg:items-stretch"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col gap-4">

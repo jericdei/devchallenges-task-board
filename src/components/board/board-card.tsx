@@ -23,14 +23,14 @@ export default function BoardCard({ board }: { board: Board }) {
   };
 
   return (
-    <div className="mb-4 grid grid-cols-[min-content_1fr] grid-rows-2 gap-x-4 gap-y-2">
+    <div className="mb-4 grid w-full grid-cols-[min-content_1fr] grid-rows-2 gap-x-4 gap-y-2">
       <Logo className="row-span-1 self-center justify-self-end" />
 
       <div className="flex items-center gap-2">
         <div>
           <input
             type="text"
-            className={`bg-transparent title max-w-[min-content] px-4 text-neutral-900 placeholder-neutral-400 outline-none ${editing ? "border-b border-neutral-400" : ""}`}
+            className={`bg-transparent title w-full px-4 text-neutral-900 placeholder-neutral-400 outline-none ${editing ? "border-b border-neutral-400" : ""}`}
             value={boardData.name}
             onChange={(e) =>
               setBoardData({ ...boardData, name: e.target.value })

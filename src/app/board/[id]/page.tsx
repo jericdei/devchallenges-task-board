@@ -20,7 +20,7 @@ export default async function Home({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center py-8">
+    <main className="flex min-h-screen w-full items-center justify-center px-2 py-8">
       <div>
         <BoardCard board={board} />
 

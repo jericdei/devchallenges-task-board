@@ -31,7 +31,7 @@ export default function Modal({
   return (
     <dialog
       ref={dialogRef}
-      className="modal-animation mr-4 h-full w-1/2 rounded-xl p-8"
+      className="modal-animation h-full w-full rounded-xl p-8 lg:mr-4 lg:w-1/2"
       onClick={handleDialogClick}
       {...props}
     >

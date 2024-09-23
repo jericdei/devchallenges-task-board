@@ -60,7 +60,9 @@ export default function TaskItem({ task, onEdit }: TaskItemProps) {
 
           <div>
             <p className="task-title">{task.name}</p>
-            <p className="mt-2 max-w-72">{task.description}</p>
+            <p className="description-light mt-2 max-w-72">
+              {task.description}
+            </p>
           </div>
         </div>
 

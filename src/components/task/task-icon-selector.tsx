@@ -24,7 +24,7 @@ const TaskIconSelector = forwardRef<HTMLInputElement, TaskIconSelectorProps>(
       <div className="flex flex-col gap-2">
         <span className="input-label">Icon</span>
 
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           {icons.map((icon) => (
             <React.Fragment key={icon}>
               <input

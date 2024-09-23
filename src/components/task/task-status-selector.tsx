@@ -28,7 +28,7 @@ const TaskStatusSelector = forwardRef<
     <div className="flex flex-col gap-2">
       <span className="input-label">Status</span>
 
-      <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-3 lg:grid-cols-2">
         {TaskStatuses.filter((x) => x !== "TODO").map((status) => (
           <React.Fragment key={status}>
             <input
