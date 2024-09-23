@@ -20,7 +20,9 @@ export default function TaskList({ tasks }: TaskListProps) {
       <TaskFormModal
         ref={modalRef}
         task={selectedTask}
-        onClose={() => modalRef.current?.close()}
+        onClose={() => {
+          modalRef.current?.close();
+        }}
       />
 
       <div className="flex flex-col gap-4">
