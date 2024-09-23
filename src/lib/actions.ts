@@ -17,3 +17,21 @@ export async function updateTask(id: string, task: TaskFormInputs) {
 
   redirect(`/?boardId=${updatedTask.boardId}`);
 }
+
+export async function createTask(boardId: string, task: TaskFormInputs) {
+  const [insertedTask] = await db
+    .insert(tasks)
+    .values({ boardId, ...task })
+    .returning();
+
+  redirect(`/?boardId=${insertedTask.boardId}`);
+}
+
+export async function deleteTask(id: string) {
+  const [deletedTask] = await db
+    .delete(tasks)
+    .where(eq(tasks.id, id))
+    .returning();
+
+  redirect(`/?boardId=${deletedTask.boardId}`);
+}

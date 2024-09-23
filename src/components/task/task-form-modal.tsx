@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 import Modal from "../modal";
 import { Task, TaskStatus } from "@/db/schema";
 import TaskIconSelector from "./task-icon-selector";
@@ -9,10 +9,12 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import Button from "../button";
 import CheckIcon from "../vector/check-icon";
 import TrashIcon from "../vector/trash-icon";
-import { updateTask } from "@/lib/actions";
+import { createTask, deleteTask, updateTask } from "@/lib/actions";
 
 interface TaskFormModalProps {
+  boardId: string;
   task?: Task;
+  isEdit: boolean;
   onClose?: () => void;
 }
 
@@ -20,26 +22,49 @@ export type TaskFormInputs = {
   name: string;
   description: string;
   icon: string;
-  status?: TaskStatus;
+  status: TaskStatus;
+};
+
+const defaultValues: TaskFormInputs = {
+  name: "",
+  description: "",
+  icon: "",
+  status: "TODO",
 };
 
 const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
-  ({ task, onClose }, ref) => {
-    const { register, handleSubmit, control, watch } = useForm<TaskFormInputs>({
-      defaultValues: {
-        name: task?.name,
-        description: task?.description ?? "",
-        icon: task?.icon ?? undefined,
-        status: task?.status ?? undefined,
-      },
+  ({ boardId, task, isEdit, onClose }, ref) => {
+    const { register, handleSubmit, control, reset } = useForm<TaskFormInputs>({
+      defaultValues,
       mode: "onChange",
+      shouldUnregister: true,
     });
+
+    useEffect(() => {
+      if (isEdit) {
+        reset({
+          name: task?.name ?? "",
+          description: task?.description ?? "",
+          icon: task?.icon ?? "",
+          status: task?.status ?? undefined,
+        });
+      } else {
+        reset(defaultValues);
+      }
+    }, [isEdit, task, reset]);
 
     const onSubmit: SubmitHandler<TaskFormInputs> = async (data) => {
       if (task?.id) {
         await updateTask(task?.id, data);
+      } else {
+        await createTask(boardId, data);
       }
 
+      onClose?.();
+    };
+
+    const removeTask = async () => {
+      await deleteTask(task?.id ?? "");
       onClose?.();
     };
 
@@ -53,9 +78,6 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
           className="flex h-full flex-col justify-between"
           onSubmit={handleSubmit(onSubmit)}
         >
-          {JSON.stringify(task, null, 2)}
-          <br />
-          {JSON.stringify(watch(), null, 2)}
           <div className="flex flex-col gap-4">
             <label
               htmlFor="name"
@@ -111,13 +133,16 @@ const TaskFormModal = forwardRef<HTMLDialogElement, TaskFormModalProps>(
           </div>
 
           <div className="flex justify-end gap-4">
-            <Button
-              type="button"
-              variant="secondary"
-              icon={<TrashIcon />}
-            >
-              Delete
-            </Button>
+            {task?.id && (
+              <Button
+                type="button"
+                variant="secondary"
+                icon={<TrashIcon />}
+                onClick={removeTask}
+              >
+                Delete
+              </Button>
+            )}
 
             <Button
               type="submit"

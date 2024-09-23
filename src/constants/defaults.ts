@@ -19,7 +19,7 @@ export const defaultTasks: Task[] = [
     boardId: defaultBoardId,
     name: "Task Completed",
     description: null,
-    icon: "🏋️‍♂️",
+    icon: "🏋️",
     status: "COMPLETED",
     createdAt: new Date(),
   },

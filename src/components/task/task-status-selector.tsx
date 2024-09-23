@@ -19,6 +19,8 @@ const TaskStatusSelector = forwardRef<
   useEffect(() => {
     if (defaultSelected && typeof defaultSelected === "string") {
       setSelected(defaultSelected);
+    } else {
+      setSelected(undefined);
     }
   }, [defaultSelected]);
 

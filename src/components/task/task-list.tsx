@@ -7,10 +7,11 @@ import { useRef, useState } from "react";
 import TaskFormModal from "./task-form-modal";
 
 interface TaskListProps {
+  boardId: string;
   tasks?: Task[];
 }
 
-export default function TaskList({ tasks }: TaskListProps) {
+export default function TaskList({ boardId, tasks }: TaskListProps) {
   const [selectedTask, setSelectedTask] = useState<Task | undefined>();
 
   const modalRef = useRef<HTMLDialogElement>(null);
@@ -19,7 +20,9 @@ export default function TaskList({ tasks }: TaskListProps) {
     <>
       <TaskFormModal
         ref={modalRef}
+        boardId={boardId}
         task={selectedTask}
+        isEdit={!!selectedTask}
         onClose={() => {
           modalRef.current?.close();
         }}
